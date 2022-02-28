@@ -15,7 +15,7 @@ pipeline {
         TF_IN_AUTOMATION = "TRUE"
         TF_VAR_consul_address = "host.docker.internal"
         TF_LOG = "WARN"
-        TF_LOG_PATH = "/var/log/terraform/terraform.log"
+        TF_LOG_PATH = "./terraform.log"
         CONSUL_HTTP_TOKEN = credentials('networking_consul_token')
         AWS_ACCESS_KEY_ID = credentials('aws_access_key')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
