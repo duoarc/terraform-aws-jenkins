@@ -24,33 +24,27 @@ pipeline {
     stages {
         stage('NetworkingInit'){
             steps {
-                dir('/'){
-                    sh 'terraform --version'
-                    sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
-                }
+                sh 'terraform --version'
+                sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
             }
         }
 
         stage('NetworkValidate'){
             steps {
-                dir('/'){
-                    sh 'terraform validate'
-                }
+                sh 'terraform validate'
             }
         }
         stage('NetworkPlan'){
             steps {
-                dir('/'){
-                    script {
-                        try {
-                            sh "terraform workspace new ${params.WORKSPACE}"
-                        } catch (err) {
-                            sh "terraform workspace select ${params.WORKSPACE}"
-                        }
+                script {
+                    try {
+                        sh "terraform workspace new ${params.WORKSPACE}"
+                    } catch (err) {
+                        sh "terraform workspace select ${params.WORKSPACE}"
                     }
-                    sh "terraform plan -out terraform-networking.tfplan;echo \$? > status"
-                    stash name: "terraform-networking-plan", includes: "terraform-networking.tfplan"
                 }
+                sh "terraform plan -out terraform-networking.tfplan;echo \$? > status"
+                stash name: "terraform-networking-plan", includes: "terraform-networking.tfplan"
             }
         }
         stage('NetworkApply'){
@@ -62,16 +56,12 @@ pipeline {
                         apply = TRUE
                     } catch (err) {
                         apply = false
-                        dir('/'){
-                            sh "terraform destroy -auto-approve"
-                        }
+                        sh "terraform destroy -auto-approve"
                         currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir('/'){
-                            unstash "terraform-networking-plan"
-                            sh 'terraform apply terraform-networking.tfplan'
-                        }
+                        unstash "terraform-networking-plan"
+                        sh 'terraform apply terraform-networking.tfplan'
                     }
                 }
             }
