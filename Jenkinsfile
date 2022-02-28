@@ -26,7 +26,7 @@ pipeline {
             steps {
                 dir('globo/'){
                     sh 'terraform --version'
-                    sh "terraform init -backend-config='path=${parems/CONSUL_STATE_PATH}'"
+                    sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
                 }
             }
         }
