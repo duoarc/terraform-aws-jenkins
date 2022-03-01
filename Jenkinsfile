@@ -3,10 +3,9 @@ pipeline {
     tools {
         "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform"
     }
-
     parameters {
-        string(name: 'CONSUL_STATE_PATH', defaultValue: 'networking/state/globo-primary')
-        string(name: 'WORKSPACE', defaultValue: 'development')
+        string(name: 'CONSUL_STATE_PATH', defaultValue: 'networking/state/globo-primary', description: 'Path in Consul for state data')
+        string(name: 'WORKSPACE', defaultValue: 'development', description: 'Workspace to use in Terraform')
     }
 
     environment {
@@ -25,8 +24,9 @@ pipeline {
     stages {
         stage('NetworkingInit'){
             steps {
+                sh 'pwd'
                 sh 'terraform --version'
-                sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
+                sh "terraform init -reconfigure -backend-config='path=${params.CONSUL_STATE_PATH}'"
             }
         }
 
