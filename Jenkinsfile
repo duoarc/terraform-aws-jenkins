@@ -5,7 +5,7 @@ pipeline {
     }
     parameters {
         string(name: 'CONSUL_STATE_PATH', defaultValue: 'networking/state/globo-primary', description: 'Path in Consul for state data')
-        string(name: 'WORKSPACE', defaultValue: 'development', description: 'Workspace to use in Terraform')
+        // string(name: 'WORKSPACE', defaultValue: 'development', description: 'Workspace to use in Terraform')
     }
 
     environment {
