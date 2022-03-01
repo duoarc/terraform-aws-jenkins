@@ -25,9 +25,9 @@ pipeline {
     stages {
         stage('NetworkingInit'){
             steps {
-                sh 'pwd'
+                // sh 'pwd'
                 sh 'terraform --version'
-                sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
+                sh "terraform init -backend-config='path=networking/state/globo-primary'"
             }
         }
 
