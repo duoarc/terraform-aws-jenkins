@@ -25,7 +25,6 @@ pipeline {
     stages {
         stage('NetworkingInit'){
             steps {
-                // sh 'pwd'
                 sh 'terraform --version'
                 sh "terraform init -backend-config='path=networking/state/globo-primary'"
             }
