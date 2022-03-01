@@ -37,13 +37,13 @@ pipeline {
         }
         stage('NetworkPlan'){
             steps {
-                script {
-                    try {
-                        sh "terraform workspace new ${params.WORKSPACE}"
-                    } catch (err) {
-                        sh "terraform workspace select ${params.WORKSPACE}"
-                    }
-                }
+                // script {
+                //     try {
+                //         sh "terraform workspace new ${params.WORKSPACE}"
+                //     } catch (err) {
+                //         sh "terraform workspace select ${params.WORKSPACE}"
+                //     }
+                // }
                 sh "terraform plan -out terraform-networking.tfplan;echo \$? > status"
                 stash name: "terraform-networking-plan", includes: "terraform-networking.tfplan"
             }
