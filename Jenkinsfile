@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'terraform --version'
-                sh "terraform init -reconfigure -backend-config='path=${params.CONSUL_STATE_PATH}'"
+                sh "terraform init -backend-config='path=${params.CONSUL_STATE_PATH}'"
             }
         }
 
